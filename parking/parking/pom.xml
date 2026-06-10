@@ -8,10 +8,10 @@
 		<version>4.0.6</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>uv.sicae.auth</groupId>
-	<artifactId>auth</artifactId>
+	<groupId>uv.sicae.parking</groupId>
+	<artifactId>parking</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>auth</name>
+	<name/>
 	<description/>
 	<url/>
 	<licenses>
@@ -49,8 +49,8 @@
 		</dependency>
 
 		<dependency>
-			<groupId>org.postgresql</groupId>
-			<artifactId>postgresql</artifactId>
+			<groupId>com.mysql</groupId>
+			<artifactId>mysql-connector-j</artifactId>
 			<scope>runtime</scope>
 		</dependency>
 		<dependency>
