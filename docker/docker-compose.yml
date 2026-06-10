@@ -1,0 +1,49 @@
+services:
+  postgres-usuarios:
+    image: postgres:17
+    container_name: sicae-postgres-usuarios
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_usuarios_data:/var/lib/postgresql/data
+    networks:
+      - sicae-red
+
+  mysql-vehiculos:
+    image: mysql:8.0
+    container_name: sicae-mysql-vehiculos
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ADMIN_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_VEHICULOS_DB}
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql_vehiculos_data:/var/lib/mysql
+    networks:
+      - sicae-red
+
+  mysql-estacionamiento:
+    image: mysql:8.0
+    container_name: sicae-mysql-estacionamiento
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ADMIN_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_ESTACIONAMIENTO_DB}
+    ports:
+      - "3308:3306"
+    volumes:
+      - mysql_estacionamiento_data:/var/lib/mysql
+    networks:
+      - sicae-red
+
+volumes:
+  postgres_usuarios_data:
+  mysql_vehiculos_data:
+  mysql_estacionamiento_data:
+
+networks:
+  sicae-red:
+    driver: bridge

@@ -1,0 +1,21 @@
+# Java / Maven
+target/
+*.jar
+*.war
+
+# NetBeans
+nbproject/private/
+build/
+dist/
+
+# IDEs
+.vscode/
+
+# Sistema
+Thumbs.db
+
+# Logs
+*.log
+
+# Variables locales
+.env
