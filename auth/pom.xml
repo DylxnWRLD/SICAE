@@ -11,7 +11,7 @@
 	<groupId>uv.sicae.auth</groupId>
 	<artifactId>auth</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>auth</name>
+	<name>sicae-auth</name>
 	<description/>
 	<url/>
 	<licenses>
