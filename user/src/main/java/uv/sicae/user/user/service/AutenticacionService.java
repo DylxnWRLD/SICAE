@@ -10,6 +10,7 @@ import uv.sicae.user.user.dto.LoginPeticion;
 import uv.sicae.user.user.dto.LoginRespuesta;
 import uv.sicae.user.user.excepcion.CampoObligatorioException;
 import uv.sicae.user.user.excepcion.CredencialesInvalidasException;
+import uv.sicae.user.user.excepcion.LargoCampoException;
 import uv.sicae.user.user.excepcion.UsuarioInactivoException;
 import uv.sicae.user.user.model.UsuarioAutenticacion;
 import uv.sicae.user.user.repository.AutenticacionRepository;
@@ -47,6 +48,14 @@ public class AutenticacionService {
         }
         if (peticion.getContrasena() == null || peticion.getContrasena().isBlank()) {
             throw new CampoObligatorioException("La contraseña es obligatoria");
+        }
+
+        if (peticion.getUsuario().length() > 30) {
+            throw new LargoCampoException("Se excedió el límite de tamaño del nombre de usuario");
+        }
+
+        if (peticion.getContrasena().length() > 50) {
+            throw new LargoCampoException("La contraseña supera el tamaño permitido");
         }
 
         UsuarioAutenticacion usuario = autenticacionRepository.buscarUsuario(peticion.getUsuario());

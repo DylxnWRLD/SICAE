@@ -25,11 +25,11 @@ Configuración para el token de autenticación
 @Service
 public class ServicioJWT {
     
-    private static final String clave="SICAE-jwt-inicio-sesion-generacion-2026";
+    private static final String llave="SICAE-jwt-inicio-sesion-generacion-2026";
     private static final long expiracion = 1000*60*60;
     
-    private Key getClave(){
-        return Keys.hmacShaKeyFor(clave.getBytes(StandardCharsets.UTF_8));
+    private Key getLlave(){
+        return Keys.hmacShaKeyFor(llave.getBytes(StandardCharsets.UTF_8));
     }
     
     public String generarToken(UsuarioAutenticacion usuario){
@@ -45,7 +45,7 @@ public class ServicioJWT {
                 .claim("tipoUsuario", usuario.getTipoUsuario())
                 .issuedAt(fechaActual)
                 .expiration(fechaExpiracion)
-                .signWith(getClave())
+                .signWith(getLlave())
                 .compact();
     }
     
