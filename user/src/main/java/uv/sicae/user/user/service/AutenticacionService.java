@@ -39,7 +39,7 @@ public class AutenticacionService {
 
     public LoginRespuesta login(LoginPeticion peticion) {
         if (peticion == null) {
-            throw new CampoObligatorioException("La petición de login es obligatoria");
+            throw new CampoObligatorioException("La petición está vacía");
         }
 
         if (peticion.getUsuario() == null || peticion.getUsuario().isBlank()) {
