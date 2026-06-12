@@ -16,17 +16,19 @@ public class LoginRespuesta {
     
     private Integer idUsuario;
     private Integer idRol;
+    private String rol;
     private String usuario;
     private String nombreCompleto;
     private Integer idTipoUsuario;
     private String tipoUsuario;
     private String token;
     
-    public LoginRespuesta(Integer idUsuario, Integer idRol, String usuario, 
+    public LoginRespuesta(Integer idUsuario, Integer idRol, String rol,  String usuario, 
             String nombreCompleto, Integer idTipoUsuario, String tipoUsuario,
     String token){
         this.idUsuario = idUsuario;
         this.idRol = idRol;
+        this.rol = rol;
         this.usuario = usuario;
         this.nombreCompleto = nombreCompleto;
         this.idTipoUsuario = idTipoUsuario;
@@ -89,5 +91,15 @@ public class LoginRespuesta {
     public void setToken(String token) {
         this.token = token;
     }
+
+    public String getRol() {
+        return rol;
+    }
+
+    public void setRol(String rol) {
+        this.rol = rol;
+    }
+    
+    
     
 }
