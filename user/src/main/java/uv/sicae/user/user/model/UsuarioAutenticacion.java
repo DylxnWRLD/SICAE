@@ -8,6 +8,10 @@ package uv.sicae.user.user.model;
  *
  * @author Dylxn
  */
+
+/*
+    Modelo usado para la validación del login
+*/
 public class UsuarioAutenticacion {
     
     private Integer idUsuario;
@@ -60,12 +64,12 @@ public class UsuarioAutenticacion {
         this.usuario = usuario;
     }
 
-    public String getContraseña() {
+    public String getContrasena() {
         return contrasena;
     }
 
-    public void setContraseña(String contraseña) {
-        this.contrasena = contraseña;
+    public void setContrasena(String contrasena) {
+        this.contrasena = contrasena;
     }
 
     public String getNombreCompleto() {
@@ -76,7 +80,7 @@ public class UsuarioAutenticacion {
         this.nombreCompleto = nombreCompleto;
     }
 
-    public boolean getEstado() {
+    public boolean isEstado() {
         return estado;
     }
 
@@ -94,7 +98,5 @@ public class UsuarioAutenticacion {
     
     
     
-    
-    
-    
+        
 }

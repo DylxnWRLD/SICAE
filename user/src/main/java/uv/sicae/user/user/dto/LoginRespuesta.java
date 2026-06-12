@@ -8,6 +8,10 @@ package uv.sicae.user.user.dto;
  *
  * @author Dylxn
  */
+
+/*
+Clase que representa la respuesta del servidor
+*/
 public class LoginRespuesta {
     
     private Integer idUsuario;
