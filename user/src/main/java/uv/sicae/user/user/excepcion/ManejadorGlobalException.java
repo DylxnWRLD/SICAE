@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 Clase encargada de manejar las excepciones que la app puede lanzar
  */
 @RestControllerAdvice
-public class ManejadorException {
+public class ManejadorGlobalException {
 
     @ExceptionHandler(CampoObligatorioException.class)
     public ResponseEntity<String> manejarCampoObligatorio(CampoObligatorioException ex) {
@@ -39,6 +39,14 @@ public class ManejadorException {
         return ResponseEntity
                 .status(HttpStatus.FORBIDDEN)
                 .body(ex.getMessage());
+    }
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<String> manejarErrorGeneral(Exception ex) {
+        ex.printStackTrace();
+        return ResponseEntity
+                .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body("Error interno: " + ex.getMessage());
     }
 
 }
