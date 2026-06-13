@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package uv.sicae.user.user.excepcion;
+package uv.sicae.user.user.exception;
 
 /**
  *
@@ -10,11 +10,12 @@ package uv.sicae.user.user.excepcion;
  */
 
 /*
-    Excepción usada cuando el usuario existe, pero está inactivo
-*/
-public class UsuarioInactivoException extends RuntimeException {
+Excepción personalizada para cuando se exceda el límte de caracteres de un campo
+ */
+public class LargoCampoException extends RuntimeException {
 
-    public UsuarioInactivoException(String mensaje) {
+    public LargoCampoException(String mensaje) {
         super(mensaje);
+
     }
 }

@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package uv.sicae.user.user.excepcion;
+package uv.sicae.user.user.exception;
 
 /**
  *
@@ -10,12 +10,11 @@ package uv.sicae.user.user.excepcion;
  */
 
 /*
-Excepción personalizada para cuando se exceda el límte de caracteres de un campo
- */
-public class LargoCampoException extends RuntimeException {
+    Excepción usada cuando falta un campo obligatorio
+*/
+public class CampoObligatorioException extends RuntimeException {
 
-    public LargoCampoException(String mensaje) {
+    public CampoObligatorioException(String mensaje) {
         super(mensaje);
-
     }
 }

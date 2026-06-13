@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package uv.sicae.user.user.excepcion;
+package uv.sicae.user.user.exception;
 
 /**
  *
@@ -10,11 +10,11 @@ package uv.sicae.user.user.excepcion;
  */
 
 /*
-    Excepción usada cuando el usuario o la contraseña son incorrectos
+    Excepción usada cuando el usuario existe, pero está inactivo
 */
-public class CredencialesInvalidasException extends RuntimeException {
+public class UsuarioInactivoException extends RuntimeException {
 
-    public CredencialesInvalidasException(String mensaje) {
+    public UsuarioInactivoException(String mensaje) {
         super(mensaje);
     }
 }
