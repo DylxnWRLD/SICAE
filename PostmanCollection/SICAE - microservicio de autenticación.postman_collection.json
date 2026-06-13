@@ -1,0 +1,239 @@
+{
+  "info": {
+    "_postman_id": "834aca42-0c74-4976-b3dd-c7d26d0a839d",
+    "name": "SICAE - microservicio de autenticación",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "54241389",
+    "_collection_link": "https://go.postman.co/collection/54241389-834aca42-0c74-4976-b3dd-c7d26d0a839d?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Inicio de sesión exitoso",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"usuario\": \"admin\",\r\n  \"contrasena\": \"admin123\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8081/api/autenticacion/login",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8081",
+          "path": [
+            "api",
+            "autenticacion",
+            "login"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Campos vacíos",
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"usuario\": \"\",\r\n  \"contrasena\": \"\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8081/api/autenticacion/login",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8081",
+          "path": [
+            "api",
+            "autenticacion",
+            "login"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Largo del campo de nombre de usuario",
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"usuario\": \"Dylaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaan\",\r\n  \"contrasena\": \"admin123\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8081/api/autenticacion/login",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8081",
+          "path": [
+            "api",
+            "autenticacion",
+            "login"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Largo del campo de nombre de la contraseña",
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"usuario\": \"Dylan\",\r\n  \"contrasena\": \"admin12333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8081/api/autenticacion/login",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8081",
+          "path": [
+            "api",
+            "autenticacion",
+            "login"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Contraseña incorrecta",
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"usuario\": \"admin\",\r\n  \"contrasena\": \"admin12345\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8081/api/autenticacion/login",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8081",
+          "path": [
+            "api",
+            "autenticacion",
+            "login"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Usuario no existe",
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"usuario\": \"Dylan1\",\r\n  \"contrasena\": \"admin123\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8081/api/autenticacion/login",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8081",
+          "path": [
+            "api",
+            "autenticacion",
+            "login"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Usuario inactivo",
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"usuario\": \"invitado\",\r\n  \"contrasena\": \"admin123\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8081/api/autenticacion/login",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8081",
+          "path": [
+            "api",
+            "autenticacion",
+            "login"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}
