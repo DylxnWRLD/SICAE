@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
  */
 
 /*
-Clase encargada de manejar las excepciones que la app puede lanzar
+ * Clase encargada de manejar las excepciones que la app puede lanzar
  */
 @RestControllerAdvice
 public class ManejadorGlobalException {
@@ -42,12 +42,33 @@ public class ManejadorGlobalException {
     }
 
     @ExceptionHandler(LargoCampoException.class)
-    public ResponseEntity<String> manjerLargoCampo(LargoCampoException ex){
+    public ResponseEntity<String> manjerLargoCampo(LargoCampoException ex) {
         return ResponseEntity
                 .status(HttpStatus.BAD_REQUEST)
                 .body(ex.getMessage());
     }
-    
+
+    @ExceptionHandler(NoAutorizadoException.class)
+    public ResponseEntity<String> manejarNoAutorizado(NoAutorizadoException ex) {
+        return ResponseEntity
+                .status(HttpStatus.UNAUTHORIZED)
+                .body(ex.getMessage());
+    }
+
+    @ExceptionHandler(RecursoNoEncontradoException.class)
+    public ResponseEntity<String> manejarRecursoNoEncontrado(RecursoNoEncontradoException ex) {
+        return ResponseEntity
+                .status(HttpStatus.NOT_FOUND)
+                .body(ex.getMessage());
+    }
+
+    @ExceptionHandler(RegistroDuplicadoException.class)
+    public ResponseEntity<String> manejarRegistroDuplicado(RegistroDuplicadoException ex) {
+        return ResponseEntity
+                .status(HttpStatus.CONFLICT)
+                .body(ex.getMessage());
+    }
+
     @ExceptionHandler(Exception.class)
     public ResponseEntity<String> manejarErrorGeneral(Exception ex) {
         ex.printStackTrace();
