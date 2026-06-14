@@ -10,6 +10,7 @@ services:
       - "5433:5432"
     volumes:
       - postgres_usuarios_data:/var/lib/postgresql/data
+      - ./bd/user:/docker-entrypoint-initdb.d/
     networks:
       - sicae-red
 
@@ -23,6 +24,7 @@ services:
       - "3307:3306"
     volumes:
       - mysql_vehiculos_data:/var/lib/mysql
+      - ./bd/vehicle:/docker-entrypoint-initdb.d/
     networks:
       - sicae-red
 
@@ -36,6 +38,7 @@ services:
       - "3308:3306"
     volumes:
       - mysql_estacionamiento_data:/var/lib/mysql
+      - ./bd/parking:/docker-entrypoint-initdb.d/
     networks:
       - sicae-red
 
