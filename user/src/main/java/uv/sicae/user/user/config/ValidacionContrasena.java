@@ -9,18 +9,21 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+
+
 /**
- *
- * @author Dylxn
- */
-
-/*
-Clase de config para usar BCrypt para validar las contraseñas
+Clase de configuración que permite crear un objeto de tipo
+{@link PasswordEncoder} para trabajar con las contraseñas
+* 
+* @author Dylxn
 */
-
 @Configuration
 public class ValidacionContrasena {
     
+    /**
+     * Crea el códificador de contraseñas utilizando BCrypt
+     * @return instancia de {@link PasswordEncoder} 
+     */
     @Bean
     public PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();

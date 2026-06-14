@@ -5,15 +5,18 @@
 package uv.sicae.user.user.exception;
 
 /**
- *
+ * Excepción personalizada lanzada cuando un campo está vacío
+ * o no tiene contenido válido
+ * 
  * @author Dylxn
  */
-
-/*
-    Excepción usada cuando falta un campo obligatorio
-*/
 public class CampoObligatorioException extends RuntimeException {
 
+    /**
+     * Crea una excepción con el mensaje que describe el campo obligatorio faltante.
+     *
+     * @param mensaje descripción del error ocurrido.
+     */
     public CampoObligatorioException(String mensaje) {
         super(mensaje);
     }

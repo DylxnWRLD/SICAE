@@ -5,13 +5,13 @@
 package uv.sicae.user.user.model;
 
 /**
- *
+ * Modelo utilizado para extraer datos de la base de datos y 
+ * realizar las validaciones correspondientes en la capa Service
+ * del microservicio de autenticación
+ * 
+ * 
  * @author Dylxn
  */
-
-/*
-    Modelo usado para la validación del login
-*/
 public class UsuarioAutenticacion {
     
     private Integer idUsuario;

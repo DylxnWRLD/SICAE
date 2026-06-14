@@ -16,24 +16,31 @@ import uv.sicae.user.user.model.DatosToken;
 import uv.sicae.user.user.model.UsuarioAutenticacion;
 
 /**
+ * Clase encargada de generar y validar el token de autenticación.
  *
- * @author Dylxn
+ * @author Dylxn y Alvaro
  */
-
-/*
- * Configuración para el token de autenticación
- */
-
 @Service
 public class ServicioJWT {
 
     private static final String llave = "SICAE-jwt-inicio-sesion-generacion-2026";
     private static final long expiracion = 1000 * 60 * 60;
 
+    /**
+     * Obtiene la llave utilizada para firmar y verificar los tokens JWT.
+     *
+     * @return llave generada a partir de la cadena secreta.
+     */
     private Key getLlave() {
         return Keys.hmacShaKeyFor(llave.getBytes(StandardCharsets.UTF_8));
     }
 
+    /**
+     * Genera un token JWT para el usuario autenticado.
+     *
+     * @param usuario modelo con los datos del usuario autenticado.
+     * @return token JWT firmado como cadena de texto.
+     */
     public String generarToken(UsuarioAutenticacion usuario) {
         Date fechaActual = new Date();
         Date fechaExpiracion = new Date(fechaActual.getTime() + expiracion);

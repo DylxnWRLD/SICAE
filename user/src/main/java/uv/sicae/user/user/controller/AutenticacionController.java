@@ -13,27 +13,38 @@ import uv.sicae.user.user.dto.LoginPeticion;
 import uv.sicae.user.user.dto.LoginRespuesta;
 import uv.sicae.user.user.service.AutenticacionService;
 
+
 /**
- *
+ * Clase encargada de recibir las peticiones del microservicio de autenticación
+ * 
  * @author Dylxn
  */
-
-/*
-Clase encargada de recibir las peticiones de autenticación
-*/
-
 @RestController
 @RequestMapping("/api/autenticacion")
 public class AutenticacionController {
-    
+
     private final AutenticacionService autenticacionService;
-    
-    public AutenticacionController(AutenticacionService autenticacionService){
+
+    /**
+     * Crea el controlador de autenticación e inyecta el servicio encargado de
+     * procesar el inicio de sesión.
+     *
+     * @param autenticacionService servicio que contiene la lógica de
+     * autenticación.
+     */
+    public AutenticacionController(AutenticacionService autenticacionService) {
         this.autenticacionService = autenticacionService;
     }
-    
+
+    /**
+     * Encargado de recibir una {@link LoginPeticion} que contiene el nombre de
+     * usuario y la contraseña del usuario para realizar el inicio de sesión
+     *
+     * @param peticion que contiene nombre de usuario y contraseña
+     * @return Código http {@link ResponseEntity} con {@link LoginRespuesta} como parte del cuerpo
+     */
     @PostMapping("/login")
-    public ResponseEntity<LoginRespuesta> login(@RequestBody LoginPeticion peticion){
+    public ResponseEntity<LoginRespuesta> login(@RequestBody LoginPeticion peticion) {
         LoginRespuesta respuesta = autenticacionService.login(peticion);
         return ResponseEntity.ok(respuesta);
     }

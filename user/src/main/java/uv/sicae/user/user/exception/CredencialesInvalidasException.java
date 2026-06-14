@@ -4,16 +4,21 @@
  */
 package uv.sicae.user.user.exception;
 
+
 /**
- *
+ * Excepción personalizada lanzada cuando las credenciales no coinciden
+ * con lo que se tiene en la base de datos
+ * 
+ * 
  * @author Dylxn
  */
-
-/*
-    Excepción usada cuando el usuario o la contraseña son incorrectos
-*/
 public class CredencialesInvalidasException extends RuntimeException {
 
+    /**
+     * Crea una excepción con el mensaje que describe la causa.
+     * 
+     * @param mensaje descripción del error ocurrido 
+     */
     public CredencialesInvalidasException(String mensaje) {
         super(mensaje);
     }

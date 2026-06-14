@@ -5,33 +5,30 @@
 package uv.sicae.user.user.dto;
 
 /**
- *
+ * DTO que representa los datos que llegan desde el cliente. 
+ * En este caso el usuario y su contraseña.
+ * 
  * @author Dylxn
  */
-
-/*
-Clase que representa los datos que llegan desde el cliente. En este
-caso el usuario y su contraseña.
-*/
 public class LoginPeticion {
-    
+
     private String usuario;
     private String contrasena;
-    
-    public String getUsuario(){
+
+    public String getUsuario() {
         return this.usuario;
     }
-    
-    public void setUsuario(String user){
+
+    public void setUsuario(String user) {
         this.usuario = user;
     }
-    
-    public String getContrasena(){
+
+    public String getContrasena() {
         return this.contrasena;
     }
-    
-    public void setContrasena (String password){
+
+    public void setContrasena(String password) {
         this.contrasena = password;
     }
-    
+
 }

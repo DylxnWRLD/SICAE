@@ -10,16 +10,31 @@ import org.apache.ibatis.annotations.Select;
 import uv.sicae.user.user.model.UsuarioAutenticacion;
 
 /**
+ * Interfaz de la capa Repository encargada de consultar la información
+ * necesaria para el proceso de autenticación de usuarios.
+ *
+ * Utiliza MyBatis para ejecutar consultas SQL y mapear los resultados
+ * al modelo {@link UsuarioAutenticacion}, el cual posteriormente es usado
+ * por la capa Service para realizar las validaciones correspondientes.
  *
  * @author Dylxn
  */
-
-/*
-Interfaz para acceder a los datos para la autenticación
-*/
 @Mapper
 public interface AutenticacionRepository {
     
+    
+    /**
+     * Busca en la base de datos la información del usuario que intenta
+     * iniciar sesión.
+     *
+     * La consulta obtiene datos como identificadores, rol, tipo de usuario,
+     * nombre de usuario, contraseña almacenada, nombre completo y estado.
+     * Estos datos son utilizados posteriormente por la capa Service
+     * para validar la autenticación.
+     *
+     * @param usuario nombre de usuario ingresado en la petición de inicio de sesión.
+     * @return objeto {@link UsuarioAutenticacion} con los datos del usuario encontrado.
+     */
     @Select("""
             SELECT
                 u."idUsuario" AS "idUsuario",

@@ -5,13 +5,12 @@
 package uv.sicae.user.user.dto;
 
 /**
+ * DTO que representa la respuesta enviada al cliente después de una
+ * autenticación exitosa.
+ *
  *
  * @author Dylxn
  */
-
-/*
-Clase que representa la respuesta del servidor
-*/
 public class LoginRespuesta {
     
     private Integer idUsuario;
@@ -23,6 +22,19 @@ public class LoginRespuesta {
     private String tipoUsuario;
     private String token;
     
+    
+    /**
+     * Datos que conforman el cuerpo de la respuesta
+     * 
+     * @param idUsuario identificador del usuario
+     * @param idRol identificador del rol asignado al usuario
+     * @param rol nombre del rol del usuario
+     * @param usuario nombre de usuario
+     * @param nombreCompleto nombre completo del usuario
+     * @param idTipoUsuario identificador del tipo de usuario
+     * @param tipoUsuario nombre del tipo de usuario
+     * @param token token JTW generado después de la autenticación
+     */
     public LoginRespuesta(Integer idUsuario, Integer idRol, String rol,  String usuario, 
             String nombreCompleto, Integer idTipoUsuario, String tipoUsuario,
     String token){

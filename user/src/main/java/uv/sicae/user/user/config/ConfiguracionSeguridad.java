@@ -9,18 +9,26 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.web.SecurityFilterChain;
 
+
 /**
- *
+ * Configura la seguridad del microservicio
+ * El login queda público para que cualquier persona pueda acceder y
+ * realizar la autenticación para obtener el token JWT.
+ * 
  * @author Dylxn
  */
-
-/*
-Clase de configuración para permitir probar los endpoints
-*/
-
 @Configuration
 public class ConfiguracionSeguridad {
     
+    /**
+     *
+     * Permite el acceso público al login y desactiva CSRF para facilitar las
+     * pruebas de autenticación desde el cliente.
+     *
+     * @param http configuración de seguridad HTTP proporcionada por Spring.
+     * @return cadena de filtros de seguridad configurada.
+     * @throws Exception si la configuración no puede construirse correctamente.
+ */
    @Bean
    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
        return http
