@@ -5,21 +5,23 @@
 package uv.sicae.vehicles.vehicles.dto.editarestatusvehiculo;
 
 /**
- *
+ * Clase DTO utilizada para envolver los datos de una petición para editar 
+ * el estatus de un vehículo
  * @author jeshu
  */
 public class EditarEstatusVehiculoPeticion {
-    private Boolean estatus;
+    private Integer estatus;
     private Integer idVehiculo;
     private Integer idUsuario;
 
-    public Boolean getEstatus() {
+    public Integer getEstatus() {
         return estatus;
     }
 
-    public void setEstatus(Boolean estatus) {
+    public void setEstatus(Integer estatus) {
         this.estatus = estatus;
     }
+
 
     public Integer getIdVehiculo() {
         return idVehiculo;

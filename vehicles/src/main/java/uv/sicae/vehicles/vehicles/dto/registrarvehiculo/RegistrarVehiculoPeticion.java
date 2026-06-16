@@ -5,7 +5,8 @@
 package uv.sicae.vehicles.vehicles.dto.registrarvehiculo;
 
 /**
- *
+ * Clase DTO utilizada para envolver los datos de una petición para registrar un 
+ * nuevo vehículo
  * @author jeshu
  */
 public class RegistrarVehiculoPeticion {
@@ -16,20 +17,9 @@ public class RegistrarVehiculoPeticion {
     private String placa;
     private String color;
     private Integer anio;
-    private Boolean estatus;
+    private Integer estatus;
     private String descripcion;
 
-    public RegistrarVehiculoPeticion(Integer idUsuario, Integer idVehiculo, Integer idModelo, String claveVehiculo, String placa, String color, Integer anio, Boolean estatus, String descripcion) {
-        this.idUsuario = idUsuario;
-        this.idVehiculo = idVehiculo;
-        this.idModelo = idModelo;
-        this.claveVehiculo = claveVehiculo;
-        this.placa = placa;
-        this.color = color;
-        this.anio = anio;
-        this.estatus = estatus;
-        this.descripcion = descripcion;
-    }
 
     public Integer getIdUsuario() {
         return idUsuario;
@@ -87,11 +77,11 @@ public class RegistrarVehiculoPeticion {
         this.anio = anio;
     }
 
-    public Boolean getEstatus() {
+    public Integer getEstatus() {
         return estatus;
     }
 
-    public void setEstatus(Boolean estatus) {
+    public void setEstatus(Integer estatus) {
         this.estatus = estatus;
     }
 
