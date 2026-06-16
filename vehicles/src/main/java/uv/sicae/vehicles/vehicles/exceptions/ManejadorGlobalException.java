@@ -1,0 +1,89 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package uv.sicae.vehicles.vehicles.exceptions;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+/**
+ *
+ * @author Dylxn y jeshu
+ */
+
+/*
+ * Clase encargada de manejar las excepciones que la app puede lanzar
+ */
+@RestControllerAdvice
+public class ManejadorGlobalException {
+
+    @ExceptionHandler(CampoObligatorioException.class)
+    public ResponseEntity<String> manejarCampoObligatorio(CampoObligatorioException ex) {
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .body(ex.getMessage());
+    }
+
+    @ExceptionHandler(AccesoDenegadoException.class)
+    public ResponseEntity<String> manejarCredencialesInvalidas(AccesoDenegadoException ex) {
+        return ResponseEntity
+                .status(HttpStatus.UNAUTHORIZED)
+                .body(ex.getMessage());
+    }
+
+
+    @ExceptionHandler(LargoCampoException.class)
+    public ResponseEntity<String> manjerLargoCampo(LargoCampoException ex) {
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .body(ex.getMessage());
+    }
+
+    @ExceptionHandler(NoAutorizadoException.class)
+    public ResponseEntity<String> manejarNoAutorizado(NoAutorizadoException ex) {
+        return ResponseEntity
+                .status(HttpStatus.UNAUTHORIZED)
+                .body(ex.getMessage());
+    }
+
+    @ExceptionHandler(ResultadoVacioException.class)
+    public ResponseEntity<String> manejarRecursoNoEncontrado(ResultadoVacioException ex) {
+        return ResponseEntity
+                .status(HttpStatus.NO_CONTENT)
+                .body(ex.getMessage());
+    }
+
+    @ExceptionHandler(VehiculosConMismaPlacaException.class)
+    public ResponseEntity<String> manejarRegistroDuplicado(VehiculosConMismaPlacaException ex) {
+        return ResponseEntity
+                .status(HttpStatus.CONFLICT)
+                .body(ex.getMessage());
+    }
+    
+    @ExceptionHandler(VehiculosActivosException.class)
+    public ResponseEntity<String> manejarRegistroDuplicado(VehiculosActivosException ex) {
+        return ResponseEntity
+                .status(HttpStatus.CONFLICT)
+                .body(ex.getMessage());
+    }
+    
+    @ExceptionHandler(RecursoInexistenteException.class)
+    public ResponseEntity<String> manejarRecursoInexistente(RecursoInexistenteException ex){
+        return ResponseEntity
+                .status(HttpStatus.NOT_FOUND)
+                .body(ex.getMessage());
+    }
+
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<String> manejarErrorGeneral(Exception ex) {
+        ex.printStackTrace();
+        return ResponseEntity
+                .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body("Ocurrió un error inesperado en el servidor");
+    }
+
+}

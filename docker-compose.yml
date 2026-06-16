@@ -59,6 +59,22 @@ services:
     networks:
       - sicae-red
 
+  microservicio-vehiculos:
+    build:
+      context: ./vehicles
+      dockerfile: Dockerfile
+    container_name: sicae-microservicio-vehiculos
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+      MYSQL_ADMIN_PASSWORD: ${MYSQL_ADMIN_PASSWORD}
+      MYSQL_ESTACIONAMIENTO_DB: ${MYSQL_ESTACIONAMIENTO_DB}
+    ports:
+      - "8082:8082"
+    depends_on:
+      - mysql-vehiculos
+    networks:
+      - sicae-red
+
 volumes:
   postgres_usuarios_data:
   mysql_vehiculos_data:
