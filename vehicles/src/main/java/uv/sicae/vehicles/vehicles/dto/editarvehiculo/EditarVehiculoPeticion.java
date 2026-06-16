@@ -5,7 +5,8 @@
 package uv.sicae.vehicles.vehicles.dto.editarvehiculo;
 
 /**
- *
+ * Clase DTO utilizada para envolver los datos de una petición para editar 
+ * los datos de un vehículo
  * @author jeshu
  */
 public class EditarVehiculoPeticion {
@@ -16,7 +17,9 @@ public class EditarVehiculoPeticion {
     private String color;
     private Integer anio;
     private String descripcion;
-
+    
+    
+    //Getters y Setters
     public Integer getIdVehiculo() {
         return idVehiculo;
     }
