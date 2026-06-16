@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import uv.sicae.vehicles.vehicles.dto.MensajeRespuesta;
 import uv.sicae.vehicles.vehicles.dto.editarestatusvehiculo.EditarEstatusVehiculoPeticion;
 import uv.sicae.vehicles.vehicles.dto.editarvehiculo.EditarVehiculoPeticion;
+import uv.sicae.vehicles.vehicles.dto.obtenervehiculos.ObtenerVehiculosPeticion;
 import uv.sicae.vehicles.vehicles.dto.registrarvehiculo.RegistrarVehiculoPeticion;
 import uv.sicae.vehicles.vehicles.exceptions.CampoObligatorioException;
 import uv.sicae.vehicles.vehicles.entity.DatosToken;
@@ -54,7 +55,8 @@ public class VehiclesService {
      *
      * @param authorizationHeader String de autorización dentro del header para
      * validación del Token
-     * @param idUsuario El id del usuario para buscar sus vehículos asociados
+     * @param peticion Objeto {@link ObtenerVehiculosPeticion} donde se envuelve 
+     * el id del usuario a obtener sus vehiculos
      * @return Una lista de vehiculos {@link vehiculos} con todos los vehículos
      * del usuario
      *
@@ -65,22 +67,22 @@ public class VehiclesService {
      * @throws ResultadoVacioException Si no hay vehiculos para mostrar
      */
     public List<Vehiculo> obtenerVehiculosPorIdUsuario(String authorizationHeader,
-            Integer idUsuario) {
+             ObtenerVehiculosPeticion peticion) {
 
         // Validar campo obligatorio de Id
-        if (idUsuario == null) {
+        if (peticion.getIdUsuario() == null) {
             throw new CampoObligatorioException("El ID es un campo obligatorio");
         }
 
         // Validar el Token del usuario
         DatosToken token = servicioJWT.validarToken(authorizationHeader);
 
-        if (!token.getIdUsuario().equals(idUsuario)) {
+        if (!token.getIdUsuario().equals(peticion.getIdUsuario())) {
             throw new AccesoDenegadoException("No puedes acceder a vehículos de otro usuario");
         }
 
         // Llamar a repository
-        List<Vehiculo> vehiculos = vehicleRepository.ObtenerVehiculosPorId(idUsuario);
+        List<Vehiculo> vehiculos = vehicleRepository.ObtenerVehiculosPorId(peticion.getIdUsuario());
 
         // Validar si el usuario no tiene vehiculos
         if (vehiculos.isEmpty()) {
