@@ -10,12 +10,21 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.web.SecurityFilterChain;
 
 /**
- *
+ * Clase para permitir que se acceda al microservicio
  * @author jeshu
  */
 
 @Configuration
 public class ConfiguraciónSeguridad {
+    
+    /**
+     *
+     * Permite el acceso público a /api/vehiculos y desactiva CSRF
+     *
+     * @param http configuración de seguridad HTTP proporcionada por Spring.
+     * @return cadena de filtros de seguridad configurada.
+     * @throws Exception si la configuración no puede construirse correctamente.
+ */
     @Bean
    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
        return http
