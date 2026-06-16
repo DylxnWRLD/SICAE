@@ -4,15 +4,16 @@
  */
 package uv.sicae.vehicles.vehicles.security;
 
+import java.nio.charset.StandardCharsets;
+import java.security.Key;
+
+import org.springframework.stereotype.Service;
+
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
-import java.nio.charset.StandardCharsets;
-import java.security.Key;
-import java.util.Date;
-import org.springframework.stereotype.Service;
-import uv.sicae.vehicles.vehicles.exceptions.NoAutorizadoException;
 import uv.sicae.vehicles.vehicles.entity.DatosToken;
+import uv.sicae.vehicles.vehicles.exceptions.NoAutorizadoException;
 
 /**
  * Clase encargada de generar y validar el token de autenticación.
@@ -36,6 +37,13 @@ public class ServicioJWT {
 
     
 
+    /**
+     * Método para validar el token
+     * @param authorizationHeader el Header con la información del token
+     * @return Los datos asociados al usuario por medio del token
+     * 
+     * @throws NoAutorizadoException Si el token es inválido o ya expiró
+     */
     public DatosToken validarToken(String authorizationHeader) {
         if (authorizationHeader == null || authorizationHeader.isBlank()) {
             throw new NoAutorizadoException("Debe proporcionar el token de autenticación");
