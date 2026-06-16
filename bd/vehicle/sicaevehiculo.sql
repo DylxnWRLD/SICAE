@@ -21,7 +21,7 @@ SET FOREIGN_KEY_CHECKS = 0;
 -- Table structure for marca
 -- ----------------------------
 DROP TABLE IF EXISTS `marca`;
-CREATE TABLE `marca`  (
+CREATE TABLE `marca` (
   `idMarca` int NOT NULL AUTO_INCREMENT,
   `marca` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `estatus` bit(1) NOT NULL,
@@ -51,7 +51,7 @@ INSERT INTO `marca` VALUES (15, 'Italika', b'1');
 -- Table structure for modelo
 -- ----------------------------
 DROP TABLE IF EXISTS `modelo`;
-CREATE TABLE `modelo`  (
+CREATE TABLE `modelo` (
   `idModelo` int NOT NULL AUTO_INCREMENT,
   `idMarca` int NOT NULL,
   `modelo` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
@@ -105,10 +105,10 @@ INSERT INTO `modelo` VALUES (38, 15, 'FT150', b'1');
 INSERT INTO `modelo` VALUES (39, 15, 'DM200', b'1');
 
 -- ----------------------------
--- Table structure for vehiculo
+-- Table structure for vehiculo 
 -- ----------------------------
 DROP TABLE IF EXISTS `vehiculo`;
-CREATE TABLE `vehiculo`  (
+CREATE TABLE `vehiculo` (
   `idVehiculo` int NOT NULL AUTO_INCREMENT,
   `idUsuario` int NOT NULL,
   `claveVehiculo` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
@@ -117,19 +117,40 @@ CREATE TABLE `vehiculo`  (
   `color` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `anio` int NOT NULL,
   `descripcion` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
+  `estatus` bit(1) NOT NULL DEFAULT b'1',  
   PRIMARY KEY (`idVehiculo`) USING BTREE,
   INDEX `idModelo`(`idModelo` ASC) USING BTREE,
   CONSTRAINT `vehiculo_ibfk_1` FOREIGN KEY (`idModelo`) REFERENCES `modelo` (`idModelo`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
--- Records of vehiculo
+-- Records of vehiculo 
 -- ----------------------------
+-- Ejemplo de inserción 
+INSERT INTO `vehiculo` (`idUsuario`, `claveVehiculo`, `idModelo`, `placa`, `color`, `anio`, `descripcion`, `estatus`) VALUES
+(1, 'VHCTOY01', 1, 'ABC123', 'Rojo', 2020, 'Auto en buen estado', b'1');
 
 -- ----------------------------
--- View structure for vehiculofullinfo
+-- View structure for vehiculofullinfo 
 -- ----------------------------
 DROP VIEW IF EXISTS `vehiculofullinfo`;
-CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `vehiculofullinfo` AS select `v`.`idVehiculo` AS `idVehiculo`,`v`.`idUsuario` AS `idUsuario`,`v`.`claveVehiculo` AS `claveVehiculo`,`m1`.`idMarca` AS `idMarca`,`m1`.`marca` AS `marca`,`v`.`idModelo` AS `idModelo`,`m`.`modelo` AS `modelo`,`v`.`placa` AS `placa`,`v`.`color` AS `color`,`v`.`anio` AS `anio`,`v`.`descripcion` AS `descripcion` from ((`vehiculo` `v` join `modelo` `m` on((`m`.`idModelo` = `v`.`idModelo`))) join `marca` `m1` on((`m1`.`idMarca` = `m`.`idMarca`)));
+CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `vehiculofullinfo` AS 
+SELECT 
+  `v`.`idVehiculo` AS `idVehiculo`,
+  `v`.`idUsuario` AS `idUsuario`,
+  `v`.`claveVehiculo` AS `claveVehiculo`,
+  `m1`.`idMarca` AS `idMarca`,
+  `m1`.`marca` AS `marca`,
+  `v`.`idModelo` AS `idModelo`,
+  `m`.`modelo` AS `modelo`,
+  `v`.`placa` AS `placa`,
+  `v`.`color` AS `color`,
+  `v`.`anio` AS `anio`,
+  `v`.`descripcion` AS `descripcion`,
+  `v`.`estatus` AS `estatus`  -- ← NUEVO CAMPO EN LA VISTA
+FROM 
+  ((`vehiculo` `v` 
+    JOIN `modelo` `m` ON ((`m`.`idModelo` = `v`.`idModelo`)))
+    JOIN `marca` `m1` ON ((`m1`.`idMarca` = `m`.`idMarca`)));
 
 SET FOREIGN_KEY_CHECKS = 1;
