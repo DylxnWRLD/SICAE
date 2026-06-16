@@ -5,10 +5,14 @@
 package uv.sicae.vehicles.vehicles.exceptions;
 
 /**
- *
+ * Excepción personalizada lanzada cuando no hay respuesta a una petición
  * @author jeshu
  */
 public class RecursoInexistenteException extends RuntimeException {
+    /**
+     * Método para mostrar el mensaje indicado como parámetro
+     * @param mensaje El String indicado como mensaje
+     */
     public RecursoInexistenteException(String mensaje){
         super(mensaje);
     }
