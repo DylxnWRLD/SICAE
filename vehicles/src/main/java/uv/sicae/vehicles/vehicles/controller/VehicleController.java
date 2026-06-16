@@ -5,6 +5,7 @@
 package uv.sicae.vehicles.vehicles.controller;
 
 import java.util.List;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,16 +14,17 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
 import uv.sicae.vehicles.vehicles.dto.MensajeRespuesta;
 import uv.sicae.vehicles.vehicles.dto.editarestatusvehiculo.EditarEstatusVehiculoPeticion;
 import uv.sicae.vehicles.vehicles.dto.editarvehiculo.EditarVehiculoPeticion;
-import uv.sicae.vehicles.vehicles.dto.obtenervehiculosid.ObtenerVehiculosPorIdRespuesta;
 import uv.sicae.vehicles.vehicles.dto.registrarvehiculo.RegistrarVehiculoPeticion;
 import uv.sicae.vehicles.vehicles.entity.Vehiculo;
 import uv.sicae.vehicles.vehicles.service.VehiclesService;
 
 /**
- * Controlador para enrutar peticiones de vehiculos jeje
+ * Clase Controller REST para recibir las peticiones de los microservicios de vehículos
+ * y proporcionar los endpoints 
  *
  * @author jeshu
  */
@@ -32,10 +34,23 @@ public class VehicleController {
 
     private final VehiclesService vehicleService;
 
+    /**
+     * Constructor de la clase e inyecta el servicio encargado de la lógica de negocio service
+     *
+     * @param vehiclesService Servicio que contiene la lógica de los vehículos
+     */
     public VehicleController(VehiclesService vehiclesService) {
         this.vehicleService = vehiclesService;
     }
 
+    /**
+     * Método encargado de recibir un {@link idUsuario} que identifica a un usuario,
+     * por el cuál se obtendrá una {@link List<Vehiculo>} donde se guardarán los
+     * vehículos asociados al usuario
+     * @param authorization String de autorización dentro del header para validación del Token
+     * @param idUsuario El id del usuario a obtener sus vehículos
+     * @return Respuesta HTTP dentro de una entidad {@link ResponseEntity} 
+     */
     @GetMapping("/{idUsuario}")
     public ResponseEntity<List<Vehiculo>> obtenerVehiculosPorIdUsuario(
             @RequestHeader(value = "Authorization", required = false) String authorization,
@@ -44,6 +59,14 @@ public class VehicleController {
         return ResponseEntity.ok(vehicleService.obtenerVehiculosPorIdUsuario(authorization, idUsuario));
     }
 
+    /**
+     * Método para registrar un vehículo, de manera que se reciben sus datos dentro
+     * de una petición {@link RegistrarVehiculoPeticion} 
+     * @param authorization String de autorización dentro del header para validación del Token
+     * @param peticion El objeto {@link RegistrarVehiculoPeticion} donde se envuelven los datos del vehículo 
+     * a guardar
+     * @return Respuesta HTTP dentro de una entidad {@link ResponseEntity} 
+     */
     @PostMapping("/registrarse")
     public ResponseEntity<MensajeRespuesta> registrarVehiculo(
             @RequestHeader(value = "Authorization", required = false) String authorization,
@@ -51,6 +74,12 @@ public class VehicleController {
         return ResponseEntity.ok(vehicleService.registrarVehiculo(authorization, peticion));
     }
     
+    /**
+     * Método para editar los datos de un vehículo 
+     * @param authorization String de autorización dentro del header para validación del Token
+     * @param peticion El objeto {@link EditarVehiculoPeticion} donde se envuelven los datos de edición del vehículo
+     * @return Respuesta HTTP dentro de una entidad {@link ResponseEntity} 
+     */
     @PostMapping("/editar")
     public ResponseEntity<MensajeRespuesta> editarVehiculo(
             @RequestHeader(value = "Authorization", required = false) String authorization,
@@ -58,6 +87,12 @@ public class VehicleController {
         return ResponseEntity.ok(vehicleService.editarVehiculo(authorization, peticion));
     }
 
+    /**
+     * Método para editar solo el estatus de un vehículo 
+     * @param authorization String de autorización dentro del header para validación del Token
+     * @param peticion El objeto {@link EditarEstatusVehiculoPeticion} donde se envuelven los datos de edición del vehículo
+     * @return Respuesta HTTP dentro de una entidad {@link ResponseEntity} 
+     */
     @PostMapping("/editarestatus")
     public ResponseEntity<MensajeRespuesta> editarEstatusVehiculo(
             @RequestHeader(value = "Authorization", required = false) String authorization,
