@@ -1,16 +1,181 @@
 {
   "info": {
+    "_postman_id": "f9a4670c-4889-4050-8694-ba1d6b13d823",
     "name": "SICAE - Microservicios de vehículos",
     "description": "Colección para probar el microservicio de vehículos de SICAE. El token se obtiene del microservicio de autenticación (puerto 8081) y se usa para las peticiones de vehículos (puerto 8082).",
-    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "54243264",
+    "_collection_link": "https://go.postman.co/collection/54243264-f9a4670c-4889-4050-8694-ba1d6b13d823?source=collection_link"
   },
-  "variable": [
-    {
-      "key": "token",
-      "value": ""
-    }
-  ],
   "item": [
+    {
+      "name": "2. Vehículos",
+      "item": [
+        {
+          "name": "Obtener vehículos por usuario",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"idUsuario\": 1\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8082/api/vehiculos/obtenervehiculos",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8082",
+              "path": [
+                "api",
+                "vehiculos",
+                "obtenervehiculos"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Registrar vehículo",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"idUsuario\": 1,\n  \"idVehiculo\": 6,\n  \"claveVehiculo\": \"TEST001\",\n  \"idModelo\": 1,\n  \"placa\": \"JEJE122\",\n  \"color\": \"Rojo\",\n  \"anio\": 2022,\n  \"descripcion\": \"Vehículo de prueba\",\n  \"estatus\": 0\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8082/api/vehiculos/registrarse",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8082",
+              "path": [
+                "api",
+                "vehiculos",
+                "registrarse"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Editar vehículo",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"idVehiculo\": 1,\n  \"idUsuario\": 1,\n  \"idModelo\": 1,\n  \"placa\": \"EDIT11\",\n  \"color\": \"Azul\",\n  \"anio\": 2023,\n  \"descripcion\": \"Vehículo editado\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8082/api/vehiculos/editar",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8082",
+              "path": [
+                "api",
+                "vehiculos",
+                "editar"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Cambiar estatus del vehículo",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"idUsuario\": 1,\n  \"idVehiculo\": 5,\n  \"estatus\": 0\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8082/api/vehiculos/editarestatus",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8082",
+              "path": [
+                "api",
+                "vehiculos",
+                "editarestatus"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
     {
       "name": "1. Autenticación - Obtener Token",
       "event": [
@@ -57,158 +222,14 @@
             "login"
           ]
         }
-      }
-    },
+      },
+      "response": []
+    }
+  ],
+  "variable": [
     {
-      "name": "2. Vehículos",
-      "item": [
-        {
-          "name": "Obtener vehículos por usuario",
-          "request": {
-            "method": "GET",
-            "auth": {
-              "type": "bearer",
-              "bearer": [
-                {
-                  "key": "token",
-                  "value": "{{token}}",
-                  "type": "string"
-                }
-              ]
-            },
-            "url": {
-              "raw": "http://localhost:8082/api/vehiculos/1",
-              "protocol": "http",
-              "host": [
-                "localhost"
-              ],
-              "port": "8082",
-              "path": [
-                "api",
-                "vehiculos",
-                "1"
-              ]
-            }
-          }
-        },
-        {
-          "name": "Registrar vehículo",
-          "request": {
-            "method": "POST",
-            "auth": {
-              "type": "bearer",
-              "bearer": [
-                {
-                  "key": "token",
-                  "value": "{{token}}",
-                  "type": "string"
-                }
-              ]
-            },
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"idUsuario\": 1,\n  \"claveVehiculo\": \"TEST001\",\n  \"idModelo\": 1,\n  \"placa\": \"TEST01\",\n  \"color\": \"Rojo\",\n  \"anio\": 2022,\n  \"descripcion\": \"Vehículo de prueba\",\n  \"estatus\": true\n}"
-            },
-            "url": {
-              "raw": "http://localhost:8082/api/vehiculos/registrarse",
-              "protocol": "http",
-              "host": [
-                "localhost"
-              ],
-              "port": "8082",
-              "path": [
-                "api",
-                "vehiculos",
-                "registrarse"
-              ]
-            }
-          }
-        },
-        {
-          "name": "Editar vehículo",
-          "request": {
-            "method": "POST",
-            "auth": {
-              "type": "bearer",
-              "bearer": [
-                {
-                  "key": "token",
-                  "value": "{{token}}",
-                  "type": "string"
-                }
-              ]
-            },
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"idVehiculo\": 1,\n  \"idUsuario\": 1,\n  \"idModelo\": 1,\n  \"placa\": \"EDIT01\",\n  \"color\": \"Azul\",\n  \"anio\": 2023,\n  \"descripcion\": \"Vehículo editado\"\n}"
-            },
-            "url": {
-              "raw": "http://localhost:8082/api/vehiculos/editar",
-              "protocol": "http",
-              "host": [
-                "localhost"
-              ],
-              "port": "8082",
-              "path": [
-                "api",
-                "vehiculos",
-                "editar"
-              ]
-            }
-          }
-        },
-        {
-          "name": "Cambiar estatus del vehículo",
-          "request": {
-            "method": "POST",
-            "auth": {
-              "type": "bearer",
-              "bearer": [
-                {
-                  "key": "token",
-                  "value": "{{token}}",
-                  "type": "string"
-                }
-              ]
-            },
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"idUsuario\": 1,\n  \"idVehiculo\": 1,\n  \"estatus\": false\n}"
-            },
-            "url": {
-              "raw": "http://localhost:8082/api/vehiculos/editarestatus",
-              "protocol": "http",
-              "host": [
-                "localhost"
-              ],
-              "port": "8082",
-              "path": [
-                "api",
-                "vehiculos",
-                "editarestatus"
-              ]
-            }
-          }
-        }
-      ]
+      "key": "token",
+      "value": ""
     }
   ]
 }
