@@ -1,0 +1,383 @@
+{
+  "info": {
+    "_postman_id": "86aa9825-63b4-4748-94c1-d0429a9809b6",
+    "name": "SICAE - ParkingService",
+    "description": "Colección para probar el microservicio parking de SICAE: validación del servicio, consulta de espacios, registro de entrada y registro de salida.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "54264978",
+    "_collection_link": "https://go.postman.co/collection/54264978-86aa9825-63b4-4748-94c1-d0429a9809b6?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Login admin",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Login exitoso', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "let json = pm.response.json();",
+                  "",
+                  "if (json.token) {",
+                  "    pm.collectionVariables.set('token', json.token);",
+                  "}",
+                  "",
+                  "if (json.idUsuario) {",
+                  "    pm.collectionVariables.set('idUsuario', json.idUsuario);",
+                  "}"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            },
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlkVXN1YXJpbyI6MSwiaWRSb2wiOjEsInJvbCI6ImFkbWluaXN0cmFkb3IiLCJpZFRpcG9Vc3VhcmlvIjoxLCJ0aXBvVXN1YXJpbyI6IkRvY2VudGUiLCJpYXQiOjE3ODE1Nzc1ODAsImV4cCI6MTc4MTU4MTE4MH0.LoJF9PjYleAhmvH4yoeUNYyjcyHVjYioBDwitdQ5JD0",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"usuario\": \"admin\",\n  \"contrasena\": \"admin12345\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrlAuth}}/api/autenticacion/login",
+              "host": [
+                "{{baseUrlAuth}}"
+              ],
+              "path": [
+                "api",
+                "autenticacion",
+                "login"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Estacionamiento",
+      "item": [
+        {
+          "name": "Consultar espacios",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrlParking}}/api/parking/espacios",
+              "host": [
+                "{{baseUrlParking}}"
+              ],
+              "path": [
+                "api",
+                "parking",
+                "espacios"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Registrar Entrada",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Entrada registrada correctamente', function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});\r",
+                  "\r",
+                  "let json = pm.response.json();\r",
+                  "\r",
+                  "if (json.idVehiculo) {\r",
+                  "    pm.collectionVariables.set('idVehiculo', json.idVehiculo);\r",
+                  "}\r",
+                  "\r",
+                  "if (json.idEspacio) {\r",
+                  "    pm.collectionVariables.set('idEspacio', json.idEspacio);\r",
+                  "}"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"claveUsuario\": \"{{claveUsuario}}\",\r\n  \"placa\": \"{{placa}}\",\r\n  \"idEspacio\": {{idEspacio}},\r\n  \"tarifaHora\": {{tarifaHora}}\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrlParking}}/api/parking/entrada",
+              "host": [
+                "{{baseUrlParking}}"
+              ],
+              "path": [
+                "api",
+                "parking",
+                "entrada"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Registrar salida",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Salida registrada correctamente', function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"claveUsuario\": \"{{claveUsuario}}\",\r\n  \"placa\": \"{{placa}}\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrlParking}}/api/parking/salida",
+              "host": [
+                "{{baseUrlParking}}"
+              ],
+              "path": [
+                "api",
+                "parking",
+                "salida"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Vehículos del Usuario",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"idUsuario\": 1,\r\n  \"idVehiculo\": 3,\r\n  \"idModelo\": 3,\r\n  \"claveVehiculo\": \"VHCTOY01\",\r\n  \"placa\": \"ABC123\",\r\n  \"color\": \"Rojo\",\r\n  \"anio\": 2020,\r\n  \"estatus\": true,\r\n  \"descripcion\": \"Auto de prueba\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8082/api/vehiculos/registrarse",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8082",
+              "path": [
+                "api",
+                "vehiculos",
+                "registrarse"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Ping",
+      "item": [
+        {
+          "name": "Prueba",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8083/api/parking/ping",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8083",
+              "path": [
+                "api",
+                "parking",
+                "ping"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrlAuth",
+      "value": ""
+    },
+    {
+      "key": "baseUrlVehiculos",
+      "value": ""
+    },
+    {
+      "key": "baseUrlParking",
+      "value": ""
+    },
+    {
+      "key": "token",
+      "value": ""
+    },
+    {
+      "key": "claveUsuario",
+      "value": ""
+    },
+    {
+      "key": "placa",
+      "value": ""
+    },
+    {
+      "key": "idEspacio",
+      "value": ""
+    },
+    {
+      "key": "tarifaHora",
+      "value": ""
+    },
+    {
+      "key": "idUsuario",
+      "value": ""
+    },
+    {
+      "key": "estatus",
+      "value": ""
+    }
+  ]
+}

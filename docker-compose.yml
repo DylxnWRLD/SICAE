@@ -75,6 +75,22 @@ services:
     networks:
       - sicae-red
 
+  microservicio-estacionamiento:
+    build:
+      context: ./parking
+      dockerfile: Dockerfile
+    container_name: sicae-microservicio-estacionamiento
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+      MYSQL_ADMIN_PASSWORD: ${MYSQL_ADMIN_PASSWORD}
+      MYSQL_ESTACIONAMIENTO_DB: ${MYSQL_ESTACIONAMIENTO_DB}
+    ports:
+      - "8083:8083"
+    depends_on:
+      - mysql-estacionamiento
+    networks:
+      - sicae-red
+
 volumes:
   postgres_usuarios_data:
   mysql_vehiculos_data:
