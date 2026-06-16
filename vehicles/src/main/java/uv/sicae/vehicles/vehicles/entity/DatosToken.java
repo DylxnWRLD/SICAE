@@ -4,10 +4,10 @@
  */
 package uv.sicae.vehicles.vehicles.entity;
 
-/**
- *
- * @author jeshu
- */
+/*
+    Modelo usado para almacenar los datos principales
+    obtenidos del token JWT del usuario autenticado.
+*/
 public class DatosToken {
     private Integer idUsuario;
     private Integer idRol;

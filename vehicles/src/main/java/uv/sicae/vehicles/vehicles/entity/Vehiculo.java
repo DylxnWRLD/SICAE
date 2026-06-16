@@ -5,7 +5,7 @@
 package uv.sicae.vehicles.vehicles.entity;
 
 /**
- * Modelo de vehiculo extraido desde la BD
+ * Clase utilizada para modelar un vehiculo extraido desde la BD
  * @author jeshu
  */
 public class Vehiculo {
@@ -20,9 +20,10 @@ public class Vehiculo {
     private String color;
     private Integer anio;
     private String descripcion;
-    private Boolean estatus;
+    private Integer estatus;
 
-    public Vehiculo(Integer idVehiculo, Integer idUsuario, String claveVehiculo, Integer idMarca, String marca, Integer idModelo, String modelo, String placa, String color, Integer anio, String descripcion, Boolean estatus) {
+    //Constructor
+    public Vehiculo(Integer idVehiculo, Integer idUsuario, String claveVehiculo, Integer idMarca, String marca, Integer idModelo, String modelo, String placa, String color, Integer anio, String descripcion, Integer estatus) {
         this.idVehiculo = idVehiculo;
         this.idUsuario = idUsuario;
         this.claveVehiculo = claveVehiculo;
@@ -37,6 +38,8 @@ public class Vehiculo {
         this.estatus = estatus;
     }
 
+    //Getters y Setters
+    
     public Integer getIdVehiculo() {
         return idVehiculo;
     }
@@ -125,11 +128,11 @@ public class Vehiculo {
         this.descripcion = descripcion;
     }
 
-    public Boolean getEstatus() {
+    public Integer getEstatus() {
         return estatus;
     }
 
-    public void setEstatus(Boolean estatus) {
+    public void setEstatus(Integer estatus) {
         this.estatus = estatus;
     }
 
