@@ -5,23 +5,22 @@
 package uv.sicae.vehicles.vehicles.service;
 
 import java.util.List;
-
 import org.springframework.stereotype.Service;
-
 import uv.sicae.vehicles.vehicles.dto.MensajeRespuesta;
 import uv.sicae.vehicles.vehicles.dto.editarestatusvehiculo.EditarEstatusVehiculoPeticion;
 import uv.sicae.vehicles.vehicles.dto.editarvehiculo.EditarVehiculoPeticion;
 import uv.sicae.vehicles.vehicles.dto.registrarvehiculo.RegistrarVehiculoPeticion;
+import uv.sicae.vehicles.vehicles.exceptions.CampoObligatorioException;
 import uv.sicae.vehicles.vehicles.entity.DatosToken;
 import uv.sicae.vehicles.vehicles.entity.Vehiculo;
 import uv.sicae.vehicles.vehicles.exceptions.AccesoDenegadoException;
-import uv.sicae.vehicles.vehicles.exceptions.CampoObligatorioException;
+import uv.sicae.vehicles.vehicles.exceptions.ErrorBDException;
 import uv.sicae.vehicles.vehicles.exceptions.LargoCampoException;
-import uv.sicae.vehicles.vehicles.exceptions.NoAutorizadoException;
 import uv.sicae.vehicles.vehicles.exceptions.RecursoInexistenteException;
 import uv.sicae.vehicles.vehicles.exceptions.ResultadoVacioException;
 import uv.sicae.vehicles.vehicles.exceptions.VehiculosActivosException;
 import uv.sicae.vehicles.vehicles.exceptions.VehiculosConMismaPlacaException;
+import uv.sicae.vehicles.vehicles.exceptions.NoAutorizadoException;
 import uv.sicae.vehicles.vehicles.repository.VehicleRepository;
 import uv.sicae.vehicles.vehicles.security.ServicioJWT;
 
@@ -148,6 +147,10 @@ public class VehiclesService {
 
         // Llamar al repository
         int registroVehiculo = vehicleRepository.registrarVehiculo(peticion);
+        
+        if (registroVehiculo < 1){
+            throw new ErrorBDException("Hubo un error en la base de datos");
+        }
 
         return new MensajeRespuesta("Vehiculo añadido exitosamente");
 

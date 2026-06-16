@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
+import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 
 /*
@@ -114,6 +116,32 @@ public class ManejadorGlobalException {
                 .status(HttpStatus.NOT_FOUND)
                 .body(ex.getMessage());
     }
+    
+    /**
+     * Manejador de excepciones para cuando se recibe un tipo de argumento erroneo o inesperado
+     * @param ex La excepción generada
+     * @return Respuesta HTTP dentro de una entidad {@link ResponseEntity}
+     */
+    @ExceptionHandler(MethodArgumentTypeMismatchException.class)
+    public ResponseEntity<String> manejarErrorArgumentos(Exception ex) {
+        ex.printStackTrace();
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .body("Error en el tipo de argumento recibido");
+    }
+    
+    /**
+     * Manejador de excepciones para cuando no se encuentra un recurso
+     * @param ex La excepción generada
+     * @return Respuesta HTTP dentro de una entidad {@link ResponseEntity}
+     */
+    @ExceptionHandler(NoResourceFoundException.class)
+    public ResponseEntity<String> manejarNoEncontrado(Exception ex) {
+        ex.printStackTrace();
+        return ResponseEntity
+                .status(HttpStatus.NOT_FOUND)
+                .body("Recurso no encontrado");
+    }
 
     /**
      * Manejador de excepciones para cuando hay un error general en el servidor
@@ -127,5 +155,5 @@ public class ManejadorGlobalException {
                 .status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body("Ocurrió un error inesperado en el servidor");
     }
-
+    
 }
