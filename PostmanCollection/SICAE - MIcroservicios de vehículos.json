@@ -76,7 +76,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"idUsuario\": 1,\n  \"idVehiculo\": 6,\n  \"claveVehiculo\": \"TEST001\",\n  \"idModelo\": 1,\n  \"placa\": \"JEJE122\",\n  \"color\": \"Rojo\",\n  \"anio\": 2022,\n  \"descripcion\": \"Vehículo de prueba\",\n  \"estatus\": 0\n}"
+              "raw": "{\n  \"idUsuario\": 1,\n  \"idVehiculo\": 7,\n  \"claveVehiculo\": \"TEST001\",\n  \"idModelo\": 6,\n  \"placa\": \"HOLA122\",\n  \"color\": \"Rojo\",\n  \"anio\": 2015,\n  \"descripcion\": \"Vehículo de prueba\",\n  \"estatus\": 0\n}"
             },
             "url": {
               "raw": "http://localhost:8082/api/vehiculos/registrarse",
@@ -107,7 +107,7 @@
                 }
               ]
             },
-            "method": "POST",
+            "method": "PUT",
             "header": [
               {
                 "key": "Content-Type",
@@ -116,7 +116,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"idVehiculo\": 1,\n  \"idUsuario\": 1,\n  \"idModelo\": 1,\n  \"placa\": \"EDIT11\",\n  \"color\": \"Azul\",\n  \"anio\": 2023,\n  \"descripcion\": \"Vehículo editado\"\n}"
+              "raw": "{\n  \"idVehiculo\": 1,\n  \"idUsuario\": 1,\n  \"idModelo\": 1,\n  \"placa\": \"HOLA123\",\n  \"color\": \"Verde\",\n  \"anio\": 2023,\n  \"descripcion\": \"Recien pintado\"\n}"
             },
             "url": {
               "raw": "http://localhost:8082/api/vehiculos/editar",
@@ -147,7 +147,7 @@
                 }
               ]
             },
-            "method": "POST",
+            "method": "PUT",
             "header": [
               {
                 "key": "Content-Type",
@@ -156,7 +156,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"idUsuario\": 1,\n  \"idVehiculo\": 5,\n  \"estatus\": 0\n}"
+              "raw": "{\n  \"idUsuario\": 1,\n  \"idVehiculo\": 1,\n  \"estatus\": 0\n}"
             },
             "url": {
               "raw": "http://localhost:8082/api/vehiculos/editarestatus",
