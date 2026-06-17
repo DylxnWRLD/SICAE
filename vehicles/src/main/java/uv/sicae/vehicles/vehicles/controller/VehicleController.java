@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -77,10 +78,11 @@ public class VehicleController {
     /**
      * Método para editar los datos de un vehículo 
      * @param authorization String de autorización dentro del header para validación del Token
-     * @param peticion El objeto {@link EditarVehiculoPeticion} donde se envuelven los datos de edición del vehículo
+     * @param peticion El objeto {@link EditarVehiculoPeticion} donde se envuelven los datos de edición 
+     * del vehículo
      * @return Respuesta HTTP dentro de una entidad {@link ResponseEntity} 
      */
-    @PostMapping("/editar")
+    @PutMapping("/editar")
     public ResponseEntity<MensajeRespuesta> editarVehiculo(
             @RequestHeader(value = "Authorization", required = false) String authorization,
             @RequestBody EditarVehiculoPeticion peticion) {
@@ -90,10 +92,11 @@ public class VehicleController {
     /**
      * Método para editar solo el estatus de un vehículo 
      * @param authorization String de autorización dentro del header para validación del Token
-     * @param peticion El objeto {@link EditarEstatusVehiculoPeticion} donde se envuelven los datos de edición del vehículo
+     * @param peticion El objeto {@link EditarEstatusVehiculoPeticion} donde se envuelven los datos de
+     * edición del vehículo
      * @return Respuesta HTTP dentro de una entidad {@link ResponseEntity} 
      */
-    @PostMapping("/editarestatus")
+    @PutMapping("/editarestatus")
     public ResponseEntity<MensajeRespuesta> editarEstatusVehiculo(
             @RequestHeader(value = "Authorization", required = false) String authorization,
             @RequestBody EditarEstatusVehiculoPeticion peticion) { 
