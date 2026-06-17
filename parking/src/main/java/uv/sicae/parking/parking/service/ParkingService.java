@@ -41,6 +41,10 @@ import uv.sicae.parking.parking.repository.ParkingRepository;
  * y que el vehículo cumpla con las reglas necesarias para entrar o salir del
  * estacionamiento.
  *
+ * En el caso de los vehículos, la validación se realiza a partir de la lista
+ * obtenida desde VehicleService y el estatus se interpreta como valor numérico,
+ * donde 1 representa un vehículo activo.
+ *
  * Esta clase forma parte de la capa Service dentro de la arquitectura en capas
  * del microservicio.
  *
@@ -87,9 +91,10 @@ public class ParkingService {
      * Registra la entrada de un vehículo al estacionamiento.
      *
      * Valida que el usuario autenticado exista, esté activo y que la
-     * claveUsuario enviada corresponda con el usuario del token. Después valida
-     * la placa mediante el microservicio de vehículos, comprobando que
-     * pertenezca al usuario y que el vehículo se encuentre activo.
+     * claveUsuario enviada corresponda con el usuario del token. Después
+     * consulta los vehículos del usuario mediante VehicleService y verifica que
+     * la placa recibida pertenezca al usuario y que el vehículo se encuentre
+     * activo.
      *
      * También verifica que el vehículo no tenga una entrada activa, que el
      * usuario no tenga más de dos vehículos dentro del estacionamiento, que el
@@ -179,14 +184,15 @@ public class ParkingService {
      * Registra la salida de un vehículo del estacionamiento.
      *
      * Valida que el usuario autenticado exista, esté activo y que la
-     * claveUsuario enviada corresponda con el usuario del token. Después valida
-     * la placa mediante el microservicio de vehículos para confirmar que
-     * pertenezca al usuario.
+     * claveUsuario enviada corresponda con el usuario del token. Después
+     * consulta los vehículos del usuario mediante VehicleService y verifica que
+     * la placa recibida pertenezca al usuario autenticado.
      *
-     * Si existe un movimiento abierto para el vehículo, calcula los minutos
-     * estacionados, determina las horas cobradas, calcula el costo total con
-     * base en la tarifa registrada al momento de la entrada, actualiza el
-     * movimiento de salida y libera el espacio ocupado.
+     * Para la salida no se exige que el vehículo esté activo, ya que pudo haber
+     * cambiado de estatus después de haber ingresado al estacionamiento. Si
+     * existe un movimiento abierto, calcula los minutos estacionados, determina
+     * las horas cobradas, calcula el costo total, actualiza el movimiento de
+     * salida y libera el espacio ocupado.
      *
      * @param authorizationHeader encabezado Authorization con el token JWT
      * recibido en la solicitud.
@@ -262,21 +268,28 @@ public class ParkingService {
     }
 
     /**
-     * Valida la información del usuario autenticado.
+     * Valida la placa del vehículo mediante el microservicio de vehículos.
      *
-     * Comprueba que el token contenga un identificador de usuario, consulta la
-     * información del usuario en UserService y verifica que exista, se
-     * encuentre activo y que la claveUsuario enviada en la petición corresponda
-     * con la clave del usuario autenticado.
+     * Consulta la lista de vehículos asociados al usuario autenticado y
+     * verifica que la placa enviada pertenezca a uno de ellos. Cuando la
+     * operación lo requiere, también valida que el vehículo se encuentre
+     * activo.
+     *
+     * Para el registro de entrada se valida que el estatus del vehículo sea 1,
+     * lo cual representa un vehículo activo. Para la salida, se permite validar
+     * únicamente la relación entre usuario y vehículo, ya que el vehículo pudo
+     * haber cambiado de estatus después de haber ingresado.
      *
      * @param authorizationHeader encabezado Authorization con el token JWT
      * recibido en la solicitud.
      * @param datosToken información obtenida del token JWT.
-     * @param claveUsuario clave de usuario enviada en el cuerpo de la petición.
-     * @throws RecursoNoEncontradoException si no se encuentra el usuario
-     * autenticado.
-     * @throws ReglaNegocioException si el usuario no está activo, si no se pudo
-     * obtener el usuario del token o si la claveUsuario no corresponde.
+     * @param placa placa del vehículo enviada en la petición.
+     * @param validarActivo indica si debe validarse que el vehículo esté
+     * activo.
+     * @return objeto VehiculoExterno correspondiente a la placa validada.
+     * @throws ReglaNegocioException si el usuario no tiene vehículos
+     * registrados, si la placa no pertenece al usuario o si el vehículo no está
+     * activo cuando la operación lo requiere.
      */
     private void validarUsuario(String authorizationHeader, DatosToken datosToken, String claveUsuario) {
         if (datosToken.getIdUsuario() == null) {
@@ -341,7 +354,7 @@ public class ParkingService {
             if (vehiculo.getPlaca() != null
                     && vehiculo.getPlaca().equalsIgnoreCase(placa)) {
 
-                if (validarActivo && !Boolean.TRUE.equals(vehiculo.getEstatus())) {
+                if (validarActivo && (vehiculo.getEstatus() == null || vehiculo.getEstatus() != 1)) {
                     throw new ReglaNegocioException("El vehículo no está activo");
                 }
 
@@ -356,10 +369,12 @@ public class ParkingService {
      * Cuenta cuántos vehículos del usuario autenticado se encuentran
      * actualmente dentro del estacionamiento.
      *
-     * Consulta los vehículos asociados al usuario en VehicleService y, por cada
-     * vehículo, revisa en la base de datos de estacionamiento si existe un
-     * movimiento abierto. El resultado se utiliza para validar la regla que
-     * limita a dos vehículos dentro del estacionamiento por usuario.
+     * Consulta la lista de vehículos asociados al usuario mediante
+     * VehicleService y, por cada vehículo con identificador válido, revisa en
+     * la base de datos de estacionamiento si existe un movimiento abierto.
+     *
+     * El resultado se utiliza para validar la regla de negocio que limita a dos
+     * vehículos dentro del estacionamiento por usuario.
      *
      * @param authorizationHeader encabezado Authorization con el token JWT
      * recibido en la solicitud.

@@ -7,16 +7,17 @@ package uv.sicae.parking.parking.dto;
 import jakarta.validation.constraints.NotBlank;
 
 /**
- * DTO utilizado para recibir los datos necesarios al registrar la salida
- * de un vehículo del estacionamiento.
+ * DTO utilizado para recibir los datos necesarios al registrar la salida de un
+ * vehículo del estacionamiento.
  *
- * Contiene la clave del usuario y la placa del vehículo que desea salir.
- * Estos datos son enviados por el cliente en el cuerpo de la solicitud HTTP
- * y se validan antes de procesar la salida.
+ * Contiene la clave del usuario y la placa del vehículo que desea salir. Estos
+ * datos son enviados por el cliente en el cuerpo de la solicitud HTTP y se
+ * validan antes de procesar la salida.
  *
- * Este objeto permite identificar al usuario y al vehículo mediante los datos
- * solicitados por la regla de negocio. El identificador del vehículo se obtiene
- * internamente mediante la validación con el microservicio de vehículos.
+ * Este objeto permite identificar la operación solicitada sin recibir
+ * directamente el identificador del vehículo, ya que dicho identificador se
+ * obtiene internamente mediante la consulta y validación con el microservicio
+ * de vehículos.
  *
  * @author josec
  */

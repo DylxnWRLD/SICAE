@@ -4,7 +4,14 @@
  */
 package uv.sicae.parking.parking.cliente;
 
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
@@ -13,6 +20,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+import tools.jackson.databind.ObjectMapper;
 import uv.sicae.parking.parking.exception.ReglaNegocioException;
 import uv.sicae.parking.parking.model.VehiculoExterno;
 
@@ -21,9 +29,12 @@ import uv.sicae.parking.parking.model.VehiculoExterno;
  * ParkingService.
  *
  * Realiza una petición HTTP hacia VehicleService para obtener la lista de
- * vehículos asociados al usuario autenticado, utilizando el token recibido en
- * la solicitud original. Esta información permite validar que la placa enviada
- * pertenezca al usuario y que el vehículo cumpla con las reglas necesarias para
+ * vehículos asociados al usuario autenticado. Para adaptarse al endpoint actual
+ * del microservicio de vehículos, envía el idUsuario dentro del cuerpo de una
+ * solicitud GET y conserva el encabezado Authorization con el token JWT.
+ *
+ * La información obtenida permite validar que la placa enviada pertenezca al
+ * usuario autenticado y que el vehículo cumpla con las reglas necesarias para
  * entrar o salir del estacionamiento.
  *
  * Esta clase apoya la comunicación entre microservicios sin acceder
@@ -34,7 +45,8 @@ import uv.sicae.parking.parking.model.VehiculoExterno;
 @Service
 public class VehiculoCliente {
 
-    private final RestTemplate restTemplate = new RestTemplate();
+    private final HttpClient httpClient = HttpClient.newHttpClient();
+    private final ObjectMapper objectMapper = new ObjectMapper();
 
     @Value("${servicios.vehiculos.url}")
     private String urlVehiculos;
@@ -43,10 +55,15 @@ public class VehiculoCliente {
      * Obtiene la lista de vehículos asociados a un usuario desde el
      * microservicio de vehículos.
      *
-     * Envía una solicitud GET a VehicleService utilizando el identificador del
-     * usuario y el encabezado Authorization con el token JWT. Si la consulta es
-     * exitosa, devuelve los vehículos necesarios para que ParkingService valide
-     * la placa, la asociación usuario-vehículo y el estatus del vehículo.
+     * Construye un cuerpo JSON con el idUsuario recibido y lo envía a
+     * VehicleService mediante una solicitud GET con body. También agrega el
+     * encabezado Authorization para conservar el token JWT recibido en la
+     * solicitud original.
+     *
+     * Si VehicleService responde correctamente, convierte la respuesta JSON en
+     * una lista de objetos VehiculoExterno. Si no existen vehículos, devuelve
+     * una lista vacía. En caso de error, lanza una excepción de regla de
+     * negocio con el detalle de la respuesta recibida.
      *
      * @param idUsuario identificador del usuario cuyos vehículos serán
      * consultados.
@@ -54,27 +71,52 @@ public class VehiculoCliente {
      * recibido en la solicitud original.
      * @return lista de vehículos asociados al usuario.
      * @throws ReglaNegocioException si no es posible comunicarse con
-     * VehicleService o si ocurre un error durante la validación del vehículo.
+     * VehicleService o si ocurre un error durante la validación de los
+     * vehículos.
      */
     public List<VehiculoExterno> obtenerVehiculosUsuario(Integer idUsuario, String authorizationHeader) {
-        HttpHeaders headers = new HttpHeaders();
-        headers.set("Authorization", authorizationHeader);
-
-        HttpEntity<Void> peticion = new HttpEntity<>(headers);
-
         try {
-            ResponseEntity<List<VehiculoExterno>> respuesta = restTemplate.exchange(
-                    urlVehiculos + "/api/vehiculos/" + idUsuario,
-                    HttpMethod.GET,
-                    peticion,
-                    new ParameterizedTypeReference<List<VehiculoExterno>>() {
-            }
+            Map<String, Integer> cuerpo = new HashMap<>();
+            cuerpo.put("idUsuario", idUsuario);
+
+            String json = objectMapper.writeValueAsString(cuerpo);
+
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(URI.create(urlVehiculos + "/api/vehiculos/obtenervehiculos"))
+                    .header("Authorization", authorizationHeader)
+                    .header("Content-Type", "application/json")
+                    .method("GET", HttpRequest.BodyPublishers.ofString(json))
+                    .build();
+
+            HttpResponse<String> respuesta = httpClient.send(
+                    request,
+                    HttpResponse.BodyHandlers.ofString()
             );
 
-            return respuesta.getBody();
+            if (respuesta.statusCode() == 204) {
+                return List.of();
+            }
 
+            if (respuesta.statusCode() < 200 || respuesta.statusCode() >= 300) {
+                throw new ReglaNegocioException(
+                        "No fue posible validar el vehículo en VehicleService: "
+                        + respuesta.statusCode() + " - " + respuesta.body()
+                );
+            }
+
+            VehiculoExterno[] vehiculos = objectMapper.readValue(
+                    respuesta.body(),
+                    VehiculoExterno[].class
+            );
+
+            return Arrays.asList(vehiculos);
+
+        } catch (ReglaNegocioException e) {
+            throw e;
         } catch (Exception e) {
-            throw new ReglaNegocioException("No fue posible validar el vehículo en VehicleService");
+            throw new ReglaNegocioException(
+                    "No fue posible validar el vehículo en VehicleService: " + e.getMessage()
+            );
         }
     }
 }

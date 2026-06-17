@@ -18,6 +18,9 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
  * comprobar que la placa enviada pertenece al usuario autenticado y, cuando
  * corresponde, que el vehículo se encuentra activo.
  *
+ * El campo estatus se maneja como valor numérico, donde normalmente 1
+ * representa un vehículo activo y 0 representa un vehículo inactivo.
+ *
  * La anotación JsonIgnoreProperties permite ignorar otros campos que pueda
  * devolver VehicleService y que no son necesarios para esta validación.
  *
@@ -29,7 +32,7 @@ public class VehiculoExterno {
     private Integer idVehiculo;
     private Integer idUsuario;
     private String placa;
-    private Boolean estatus;
+    private Integer estatus;
 
     public Integer getIdVehiculo() {
         return idVehiculo;
@@ -55,11 +58,11 @@ public class VehiculoExterno {
         this.placa = placa;
     }
 
-    public Boolean getEstatus() {
+    public Integer getEstatus() {
         return estatus;
     }
 
-    public void setEstatus(Boolean estatus) {
+    public void setEstatus(Integer estatus) {
         this.estatus = estatus;
     }
 }
