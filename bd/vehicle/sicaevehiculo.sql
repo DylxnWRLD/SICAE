@@ -126,9 +126,24 @@ CREATE TABLE `vehiculo` (
 -- ----------------------------
 -- Records of vehiculo 
 -- ----------------------------
--- Ejemplo de inserción 
+-- Inserciones
+-- Usuario ID 1
 INSERT INTO `vehiculo` (`idUsuario`, `claveVehiculo`, `idModelo`, `placa`, `color`, `anio`, `descripcion`, `estatus`) VALUES
-(1, 'VHCTOY01', 1, 'ABC123', 'Rojo', 2020, 'Auto en buen estado', b'1');
+(1, 'VHCTOY02', 2, 'XYZ789', 'Azul', 2021, 'Auto compacto económico', b'1'),
+(1, 'VHCHON01', 5, 'DEF456', 'Negro', 2022, 'Sedán de lujo', b'0'),
+(1, 'VHCNIS01', 7, 'GHI123', 'Blanco', 2020, 'Auto familiar', b'1');
+
+-- Usuario ID 2
+INSERT INTO `vehiculo` (`idUsuario`, `claveVehiculo`, `idModelo`, `placa`, `color`, `anio`, `descripcion`, `estatus`) VALUES
+(2, 'VHCCHE01', 11, 'JKL789', 'Plateado', 2023, 'SUV moderna', b'1'),
+(2, 'VHCFOR01', 14, 'MNO456', 'Rojo', 2021, 'Auto deportivo', b'1'),
+(2, 'VHCVOL01', 16, 'PQR123', 'Gris', 2022, 'Sedán alemán', b'1');
+
+-- Usuario ID 3
+INSERT INTO `vehiculo` (`idUsuario`, `claveVehiculo`, `idModelo`, `placa`, `color`, `anio`, `descripcion`, `estatus`) VALUES
+(3, 'VHCMAZ01', 20, 'STU789', 'Azul metálico', 2023, 'Auto deportivo japonés', b'0'),
+(3, 'VHCKIA01', 22, 'VWX456', 'Blanco', 2022, 'Auto compacto económico', b'1'),
+(3, 'VHCHYU01', 26, 'YZA123', 'Negro', 2021, 'Sedán mediano', b'1');
 
 -- ----------------------------
 -- View structure for vehiculofullinfo 
