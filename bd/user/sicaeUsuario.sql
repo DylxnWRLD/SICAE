@@ -270,3 +270,98 @@ ALTER TABLE "public"."usuario" ADD CONSTRAINT "usuario_pkey" PRIMARY KEY ("idUsu
 ALTER TABLE "public"."usuario" ADD CONSTRAINT "usuario_idProgramaEducativo_fkey" FOREIGN KEY ("idProgramaEducativo") REFERENCES "public"."programaEducativo" ("idPrograma") ON DELETE NO ACTION ON UPDATE NO ACTION;
 ALTER TABLE "public"."usuario" ADD CONSTRAINT "usuario_idRol_fkey" FOREIGN KEY ("idRol") REFERENCES "public"."rol" ("idrol") ON DELETE NO ACTION ON UPDATE NO ACTION;
 ALTER TABLE "public"."usuario" ADD CONSTRAINT "usuario_idTipoUsuario_fkey" FOREIGN KEY ("idTipoUsuario") REFERENCES "public"."tipoUsuario" ("idTipo") ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+-- ----------------------------
+-- Corregir contraseña del admin
+-- ----------------------------
+
+UPDATE "public"."usuario"
+SET "password" = '$2a$10$xmrcLbcOteI3US5lYyP5TutTZEF/Ax5CGWmBMTy1x8BdYTundh2aO'
+WHERE "idUsuario" = 1;
+
+
+-- ----------------------------
+-- Usuarios iniciales
+-- ----------------------------
+
+INSERT INTO "public"."usuario" (
+    "idUsuario",
+    nombre,
+    "apellidoPaterno",
+    "apellidoMaterno",
+    "claveUsuario",
+    email,
+    telefono,
+    username,
+    password,
+    estatus,
+    "idRol",
+    "idTipoUsuario",
+    "idProgramaEducativo",
+    "tiempoCreacion",
+    "tempoActualizacion"
+)
+VALUES
+(
+    2,
+    'Juan',
+    'Pérez',
+    'López',
+    'S230001',
+    'juan.perez@example.com',
+    '2281234567',
+    'juanperez',
+    '$2a$10$xmrcLbcOteI3US5lYyP5TutTZEF/Ax5CGWmBMTy1x8BdYTundh2aO',
+    B'1',
+    2,
+    2,
+    3,
+    NOW(),
+    NULL
+),
+(
+    3,
+    'María',
+    'García',
+    'Hernández',
+    'S230002',
+    'maria.garcia@example.com',
+    '2287654321',
+    'mariagarcia',
+    '$2a$10$xmrcLbcOteI3US5lYyP5TutTZEF/Ax5CGWmBMTy1x8BdYTundh2aO',
+    B'1',
+    2,
+    2,
+    3,
+    NOW(),
+    NULL
+),
+(
+    4,
+    'Carlos',
+    'Ramírez',
+    'Torres',
+    'D230001',
+    'carlos.ramirez@example.com',
+    '2281112233',
+    'carlosramirez',
+    '$2a$10$xmrcLbcOteI3US5lYyP5TutTZEF/Ax5CGWmBMTy1x8BdYTundh2aO',
+    B'1',
+    2,
+    1,
+    3,
+    NOW(),
+    NULL
+)
+ON CONFLICT ("idUsuario") DO NOTHING;
+
+
+-- ----------------------------
+-- Ajustar autoincremento al último usuario insertado
+-- ----------------------------
+
+SELECT setval(
+  '"public"."usuario_idUsuario_seq"',
+  COALESCE((SELECT MAX("idUsuario") FROM "public"."usuario"), 1),
+  true
+);
