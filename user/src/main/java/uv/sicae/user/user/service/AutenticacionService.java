@@ -71,13 +71,7 @@ public class AutenticacionService {
             throw new CampoObligatorioException("La petición está vacía");
         }
 
-        if (peticion.getUsuario() == null || peticion.getUsuario().isBlank()) {
-            throw new CampoObligatorioException("El usuario es obligatorio");
-        }
-
-        if (peticion.getContrasena() == null || peticion.getContrasena().isBlank()) {
-            throw new CampoObligatorioException("La contraseña es obligatoria");
-        }
+        validarCamposObligatorios(peticion);
 
         if (peticion.getUsuario().length() > 30) {
             throw new LargoCampoException("Se excedió el límite de tamaño del nombre de usuario");
@@ -118,5 +112,22 @@ public class AutenticacionService {
                 usuario.getTipoUsuario(),
                 token
         );
+    }
+    
+    /**
+     * Método para validar que tanto el nombre de usuario como la contraseña
+     * se encuentren con el contenido válido correspondiente
+     * 
+     * @param peticion con el nombre de usuario y contraseña  
+     * @throws CampoObligatorioException si el usuario o la contraseña son nulos, 
+     * vacíos o contienen únicamente espacios.
+     */
+    private void validarCamposObligatorios(LoginPeticion peticion){
+        if(peticion.getUsuario() == null || peticion.getUsuario().isBlank()){
+            throw new CampoObligatorioException("El nombre de usuario es obligatorio");
+        }
+        if(peticion.getContrasena()== null || peticion.getContrasena().isBlank()){
+            throw new CampoObligatorioException("La contraseña es obligatoria");
+        }
     }
 }
